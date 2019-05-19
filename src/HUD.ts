@@ -1,7 +1,7 @@
 import * as MRESDK from '@microsoft/mixed-reality-extension-sdk'
 
 import { User } from './common'
-import { Fart } from './fart'
+import { Speak } from './fart'
 import { Blackout } from './blackout'
 import { Utility } from './utility'
 
@@ -19,11 +19,11 @@ export class HUD {
     static readonly textHeight = 0.05
 
     private planeActor: MRESDK.Actor 
-    private fart: Fart
+    private speak: Speak
     private blackout: Blackout
 
     constructor(private context: MRESDK.Context, private baseUrl: string) {
-        this.fart = new Fart(context, baseUrl)
+        this.speak = new Speak(context, baseUrl)
         this.blackout = new Blackout(context)
     }
 
@@ -64,13 +64,13 @@ export class HUD {
 
             this.addTextToHUD(this.planeActor, HUD.margin, y, Utility.truncate(user.name, 13), HUD.greenColor, false)
 
-            let fartTextActor = this.addTextToHUD(this.planeActor, HUD.margin + 0.4, y, "fart", HUD.blueColor, false)
-            fartTextActor.setCollider("box", false)
+            let speakTextActor = this.addTextToHUD(this.planeActor, HUD.margin + 0.4, y, "fart", HUD.blueColor, false)
+            speakTextActor.setCollider("box", false)
             
-            const fartTextButtonBehavior = fartTextActor.setBehavior(MRESDK.ButtonBehavior)
-            fartTextButtonBehavior.onClick('pressed', (mreUser: MRESDK.User) => {
-                if (user.isFarting == false) {
-                    this.fart.playSound(user)
+            const speakTextButtonBehavior = speakTextActor.setBehavior(MRESDK.ButtonBehavior)
+            speakTextButtonBehavior.onClick('pressed', (mreUser: MRESDK.User) => {
+                if (user.isSpeaking == false) {
+                    this.speak.playSound(user)
                 }
             })
 
