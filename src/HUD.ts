@@ -64,7 +64,7 @@ export class HUD {
 
             this.addTextToHUD(this.planeActor, HUD.margin, y, Utility.truncate(user.name, 13), HUD.greenColor, false)
 
-            let speakTextActor = this.addTextToHUD(this.planeActor, HUD.margin + 0.4, y, "fart", HUD.blueColor, false)
+            let speakTextActor = this.addTextToHUD(this.planeActor, HUD.margin + 0.4, y, "Question", HUD.blueColor, false)
             speakTextActor.setCollider("box", false)
             
             const speakTextButtonBehavior = speakTextActor.setBehavior(MRESDK.ButtonBehavior)
