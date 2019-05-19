@@ -2,25 +2,25 @@ import * as MRESDK from '@microsoft/mixed-reality-extension-sdk'
 
 import { User } from './common'
 
-export class Fart {
-    static readonly fartCloudResourceId = "artifact: 1209665568215400791"
+export class Speak {
+    static readonly speakCloudResourceId = "artifact: 1209665568215400791"
     static readonly durationInMilliseconds = 7000 
 
     private interval: NodeJS.Timeout
 
-    private fartSoundAsset: MRESDK.Sound
+    private speakSoundAsset: MRESDK.Sound
 
     constructor(private context: MRESDK.Context, private baseUrl: string) {
-        this.fartSoundAsset = this.context.assetManager.createSound(
-            'fartSound',
+        this.speakSoundAsset = this.context.assetManager.createSound(
+            'speakSound',
             { uri: `${this.baseUrl}/fart.wav` }
         ).value    
     }
 
     public playSound(user: User) {
-        user.isFarting = true
+        user.isSpeaking = true
 
-        user.fartSoundActor = MRESDK.Actor.CreatePrimitive(this.context, {
+        user.speakSoundActor = MRESDK.Actor.CreatePrimitive(this.context, {
             definition: {
                 shape: MRESDK.PrimitiveShape.Sphere
             },
@@ -35,7 +35,7 @@ export class Fart {
             }
         }).value
 
-        user.fartSoundActor.startSound(this.fartSoundAsset.id, {
+        user.speakSoundActor.startSound(this.speakSoundAsset.id, {
             volume: 1.0,
             looping: false,
             doppler: 0.0,
@@ -44,8 +44,8 @@ export class Fart {
         },
         0.0)
 
-        user.fartCloudActor = MRESDK.Actor.CreateFromLibrary(this.context, {
-            resourceId: Fart.fartCloudResourceId,
+        user.speakCloudActor = MRESDK.Actor.CreateFromLibrary(this.context, {
+            resourceId: Speak.speakCloudResourceId,
             actor: {
                 transform: {
                     local: {
@@ -62,10 +62,9 @@ export class Fart {
         }).value
 
         this.interval = setTimeout(() => {
-            user.isFarting = false
-            user.fartSoundActor.destroy()
-            user.fartCloudActor.destroy()
-        }, Fart.durationInMilliseconds)
+            user.isSpeaking = false
+            user.speakSoundActor.destroy()
+            user.speakCloudActor.destroy()
+        }, Speak.durationInMilliseconds)
     }
 }
-
